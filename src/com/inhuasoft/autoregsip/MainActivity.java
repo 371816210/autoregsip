@@ -109,13 +109,13 @@ public class MainActivity extends Activity implements SensorEventListener,
     		HttpPost request = new HttpPost(httpUrl);
     		HttpClient httpClient = new DefaultHttpClient();
     		List<NameValuePair> params = new ArrayList<NameValuePair>();
-    		params.add(new BasicNameValuePair("uname", "user1"));
+    		params.add(new BasicNameValuePair("uname", "user2"));
     		params.add(new BasicNameValuePair("email", "371816210@163.com"));
     		params.add(new BasicNameValuePair("alias", "user1"));
     		params.add(new BasicNameValuePair("domain", "115.28.9.71"));
     		params.add(new BasicNameValuePair("alias_type", "dbaliases"));
-    		params.add(new BasicNameValuePair("passwd", "user1"));
-    		params.add(new BasicNameValuePair("confirm_passwd", "user1"));
+    		params.add(new BasicNameValuePair("passwd", "user2"));
+    		params.add(new BasicNameValuePair("confirm_passwd", "user2"));
     		HttpResponse response;
     		myApplication   appCookie = ((myApplication)getApplication());   
     		((AbstractHttpClient) httpClient).setCookieStore(appCookie.getCookie());
@@ -125,14 +125,22 @@ public class MainActivity extends Activity implements SensorEventListener,
     			request.setEntity(entity);
     			response = httpClient.execute(request);
 
-    			// ����״̬Ϊ200����÷��صĽ��
+
     			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
     				String str = EntityUtils.toString(response.getEntity());
     			    String strmd5 = MD5.getMD5(str);
-    				System.out.println("response:" + str);
+    				//System.out.println("response:" + str);
+    				if(str.contains("is already a valid user"))
+    				{
+    					System.out.println("=================is already a valid user");
+    				}
+    				if(str.contains("Total Records"))
+    				{
+    					System.out.println("=================Total Records:");
+    				}
     				System.out.println(" login in add user");
     			  /* if (strmd5.equals(login_ok)) {
-    					// �û���¼�ɹ�
+   
     					System.out.println("��¼�ɹ���");
     					CookieStore cookies=((AbstractHttpClient)httpClient).getCookieStore();
     					((AbstractHttpClient) httpClient).setCookieStore(cookies);
